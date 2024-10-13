@@ -1,3 +1,5 @@
+using Autofac.Core;
+
 namespace RemindMe
 {
     public class Program
@@ -10,12 +12,16 @@ namespace RemindMe
 
             builder.Services.AddControllers();
 
+            builder.Services.AddSwaggerGen();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
 
             app.UseAuthorization();
 
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.MapControllers();
 
