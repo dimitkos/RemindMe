@@ -1,4 +1,6 @@
-﻿namespace Domain.Aggregates
+﻿using Shared;
+
+namespace Domain.Aggregates
 {
     public class Reminder
     {
@@ -27,33 +29,13 @@
                 notifyAt: notifyAt);
         }
 
-        public Reminder UpdateMessage(string message)
+        public Reminder UpdateReminder(string message, Channel channel, DateTime notifyAt)
         {
             Message = message;
-
-            return this;
-        }
-
-        public Reminder UpdateChannel(Channel channel)
-        {
             Channel = channel;
-
-            return this;
-        }
-
-        public Reminder UpdateNotifyAt(DateTime notifyAt)
-        {
             NotifyAt = notifyAt;
 
             return this;
         }
-    }
-
-#warning move this to shared
-    public enum Channel
-    {
-        EmailMessage,
-        MobileMessage,
-        Notification
     }
 }

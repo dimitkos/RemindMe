@@ -15,4 +15,16 @@
             Mobile = mobile;
         }
     }
+
+    public class UpdateEmailPayload
+    {
+        public int UserId { get; }
+        public string Email { get; }
+
+        public UpdateEmailPayload(int userId, string email)
+        {
+            UserId = userId;
+            Email = email;
+        }
+    }
 }

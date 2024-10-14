@@ -1,4 +1,6 @@
-﻿namespace Domain.Aggregates
+﻿using Shared;
+
+namespace Domain.Aggregates
 {
     public class User
     {
@@ -21,7 +23,7 @@
             Reminders = reminders;
         }
 
-        public static User CreateUser(int id, string firstname, string lastname, string email, string mobile)
+        public static User Create(int id, string firstname, string lastname, string email, string mobile)
         {
             return new User(
                 id: id,
@@ -40,49 +42,22 @@
             return this;
         }
 
-        public User CreateReminder(string email)
+        public User CreateReminder(int reminderId, string message, Channel channel, DateTime notifyAt)
         {
-            Email = email;
+            var reminder = Reminder.CreateReminder(reminderId, message, channel, notifyAt);
+            Reminders.Add(reminder);
 
             return this;
         }
 
-        public User UpdateChannelReminder(int reminderId, Channel channel)
+        public User UpdateReminder(int reminderId, string message, Channel channel, DateTime notifyAt)
         {
             var reminder = Reminders.FirstOrDefault(x => x.Id == reminderId);
 
             if (reminder is null)
                 throw new Exception($"Reminder with id {reminderId} does not exist");
 
-            var updatedRemider = reminder.UpdateChannel(channel);
-
-            reminder = updatedRemider;
-
-            return this;
-        }
-
-        public User UpdateMessageReminder(int reminderId, string message)
-        {
-            var reminder = Reminders.FirstOrDefault(x => x.Id == reminderId);
-
-            if (reminder is null)
-                throw new Exception($"Reminder with id {reminderId} does not exist");
-
-            var updatedRemider = reminder.UpdateMessage(message);
-
-            reminder = updatedRemider;
-
-            return this;
-        }
-
-        public User UpdateMessageNotifyAt(int reminderId, DateTime notifyAt)
-        {
-            var reminder = Reminders.FirstOrDefault(x => x.Id == reminderId);
-
-            if (reminder is null)
-                throw new Exception($"Reminder with id {reminderId} does not exist");
-
-            var updatedRemider = reminder.UpdateNotifyAt(notifyAt);
+            var updatedRemider = reminder.UpdateReminder(message, channel, notifyAt);
 
             reminder = updatedRemider;
 
