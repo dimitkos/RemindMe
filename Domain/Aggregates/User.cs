@@ -4,7 +4,7 @@ namespace Domain.Aggregates
 {
     public class User
     {
-        public int Id { get; }
+        public long Id { get; }
         public string Firstname { get; }
         public string Lastname { get; }
         public string Email { get; private set; }
@@ -12,7 +12,7 @@ namespace Domain.Aggregates
         public DateTime RegisteredAt { get; }
         public List<Reminder> Reminders { get; }
 
-        public User(int id, string firstname, string lastname, string email, string mobile, DateTime registeredAt, List<Reminder> reminders)
+        public User(long id, string firstname, string lastname, string email, string mobile, DateTime registeredAt, List<Reminder> reminders)
         {
             Id = id;
             Firstname = firstname;
@@ -23,7 +23,7 @@ namespace Domain.Aggregates
             Reminders = reminders;
         }
 
-        public static User Create(int id, string firstname, string lastname, string email, string mobile)
+        public static User Create(long id, string firstname, string lastname, string email, string mobile)
         {
             return new User(
                 id: id,
@@ -42,9 +42,9 @@ namespace Domain.Aggregates
             return this;
         }
 
-        public User CreateReminder(int reminderId, string message, Channel channel, DateTime notifyAt)
+        public User CreateReminder(int reminderId, string message, Channel channel, DateTime notifyAt, long userId)
         {
-            var reminder = Reminder.CreateReminder(reminderId, message, channel, notifyAt);
+            var reminder = Reminder.CreateReminder(reminderId, message, channel, notifyAt, userId);
             Reminders.Add(reminder);
 
             return this;

@@ -1,4 +1,6 @@
-using Autofac.Core;
+using IdGen.DependencyInjection;
+using Infrastructure.Persistence.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace RemindMe
 {
@@ -8,11 +10,13 @@ namespace RemindMe
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
-
             builder.Services.AddSwaggerGen();
+
+#warning move to apsettings
+            builder.Services.AddIdGen(11);
+            var connectionString = builder.Configuration.GetConnectionString("remindMe");
+            builder.Services.AddDbContext<RemindMeDbContext>(options => options.UseSqlServer(connectionString));
 
             var app = builder.Build();
 
