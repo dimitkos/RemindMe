@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Persistence\Commands\Reminders\" />
     <Folder Include="Persistence\Commands\Users\" />
-    <Folder Include="Persistence\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 

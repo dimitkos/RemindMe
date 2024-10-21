@@ -41,39 +41,5 @@ namespace Domain.Aggregates
 
             return this;
         }
-
-        public User CreateReminder(int reminderId, string message, Channel channel, DateTime notifyAt, long userId)
-        {
-            var reminder = Reminder.CreateReminder(reminderId, message, channel, notifyAt, userId);
-            Reminders.Add(reminder);
-
-            return this;
-        }
-
-        public User UpdateReminder(int reminderId, string message, Channel channel, DateTime notifyAt)
-        {
-            var reminder = Reminders.FirstOrDefault(x => x.Id == reminderId);
-
-            if (reminder is null)
-                throw new Exception($"Reminder with id {reminderId} does not exist");
-
-            var updatedRemider = reminder.UpdateReminder(message, channel, notifyAt);
-
-            reminder = updatedRemider;
-
-            return this;
-        }
-
-        public User DeleteReminder(int reminderId)
-        {
-            var reminder = Reminders.FirstOrDefault(x => x.Id == reminderId);
-
-            if (reminder is null)
-                throw new Exception($"Reminder with id {reminderId} does not exist");
-
-            Reminders.Remove(reminder);
-
-            return this;
-        }
     }
 }
