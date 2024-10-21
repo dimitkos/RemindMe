@@ -14,20 +14,20 @@ namespace Infrastructure.Persistence.Queries.Users
             _options = options;
         }
 
-        public Task<User?> TryGet(long id)
+        public async Task<User?> TryGet(long id)
         {
             using var context = new RemindMeDbContext(_options);
 
-            var user = context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
             return user;
         }
 
-        public Task<Dictionary<long, User>> TryGetMany(long[] ids)
+        public async Task<Dictionary<long, User>> TryGetMany(long[] ids)
         {
             using var context = new RemindMeDbContext(_options);
 
-            var users = context.Users
+            var users = await context.Users
                 .Where(x => ids.Contains(x.Id))
                 .ToDictionaryAsync(x => x.Id);
 

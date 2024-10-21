@@ -14,20 +14,20 @@ namespace Infrastructure.Persistence.Queries.Reminders
             _options = options;
         }
 
-        public Task<Reminder?> TryGet(long id)
+        public async Task<Reminder?> TryGet(long id)
         {
             using var context = new RemindMeDbContext(_options);
 
-            var reminder = context.Reminders.FirstOrDefaultAsync(x => x.Id == id);
+            var reminder = await context.Reminders.FirstOrDefaultAsync(x => x.Id == id);
 
             return reminder;
         }
 
-        public Task<Dictionary<long, Reminder>> TryGetMany(long[] ids)
+        public async Task<Dictionary<long, Reminder>> TryGetMany(long[] ids)
         {
             using var context = new RemindMeDbContext(_options);
 
-            var reminders = context.Reminders
+            var reminders = await context.Reminders
                 .Where(x => ids.Contains(x.Id))
                 .ToDictionaryAsync(x => x.Id);
 
