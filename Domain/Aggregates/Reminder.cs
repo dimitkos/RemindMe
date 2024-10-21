@@ -21,7 +21,7 @@ namespace Domain.Aggregates
             UserId = userId;
         }
 
-        public static Reminder CreateReminder(int id, string message, Channel channel, DateTime notifyAt, long userId)
+        public static Reminder Create(long id, string message, Channel channel, DateTime notifyAt, long userId)
         {
             return new Reminder(
                 id: id,

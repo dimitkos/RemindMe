@@ -24,5 +24,12 @@ namespace Api.Controllers
             return Ok();
         }
 
+        [HttpPost("UpdateEmail")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateEmail([FromBody] UpdateEmailPayload payload)
+        {
+            await _mediator.Send(new UpdateEmail(payload));
+            return Ok();
+        }
     }
 }
