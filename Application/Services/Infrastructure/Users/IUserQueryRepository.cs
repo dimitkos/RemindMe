@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shared;
 
 namespace Application.Services.Infrastructure.Users
 {
     public interface IUserQueryRepository
     {
         //Task<User?> SarchUsers();
+        Task<User[]> GetUsers(long[] ids);
+
     }
 }

@@ -46,6 +46,24 @@
         }
     }
 
+    public class Reminder
+    {
+        public long Id { get; }
+        public string Message { get; }
+        public Channel Channel { get; }
+        public DateTime CreatedAt { get; }
+        public DateTime NotifyAt { get; }
+
+        public Reminder(long id, string message, Channel channel, DateTime createdAt, DateTime notifyAt)
+        {
+            Id = id;
+            Message = message;
+            Channel = channel;
+            CreatedAt = createdAt;
+            NotifyAt = notifyAt;
+        }
+    }
+
     public enum Channel
     {
         EmailMessage,
