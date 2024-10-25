@@ -1,5 +1,6 @@
 ﻿using Application.Services.Infrastructure.Users;
 using Domain.Aggregates;
+using Domain.DomainEvents;
 using IdGen;
 using MediatR;
 
@@ -8,11 +9,13 @@ namespace Application.Commands.Users
     class AddUserHandler : IRequestHandler<AddUser, Unit>
     {
         private readonly IUserCommandRepository _userRepository;
+        private readonly IMediator _mediator;
         private readonly IdGenerator _idGenerator;
 
-        public AddUserHandler(IUserCommandRepository userRepository, IdGenerator idGenerator)
+        public AddUserHandler(IUserCommandRepository userRepository, IMediator mediator, IdGenerator idGenerator)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
             _idGenerator = idGenerator;
         }
 
@@ -26,6 +29,8 @@ namespace Application.Commands.Users
                 mobile: request.Payload.Mobile);
 
             await _userRepository.Create(user);
+
+            await _mediator.Publish(new UserAdded(user.Id, user.Firstname, user.Email));
 
             return Unit.Value;
         }
