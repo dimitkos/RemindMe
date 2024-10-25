@@ -9,14 +9,14 @@ namespace Infrastructure.Persistence.Configuration
     {
         public RemindMeDbContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<RemindMeDbContext>();
-
+            //Add-Migration Init -Context RemindMeDbContext -OutputDir Persistence\Configuration\Migrations
             var configuration = new ConfigurationBuilder()
-                 .SetBasePath(Path.GetFullPath(@"../Api/"))
+                 .SetBasePath(Path.GetFullPath(@"../RemindMe/"))
                  .AddJsonFile("appsettings.json")
-            //.AddJsonFile("appsettings.Development.json", optional: false)
+                 .AddJsonFile("appsettings.Development.json", optional: false)
                  .Build();
 
+            var optionsBuilder = new DbContextOptionsBuilder<RemindMeDbContext>();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("remindMe"));
 
             return new RemindMeDbContext(optionsBuilder.Options);

@@ -19,6 +19,11 @@ namespace Domain.Aggregates
             UserId = userId;
         }
 
+        private Reminder() : base(default)
+        {
+            Message = string.Empty;
+        }
+
         public static Reminder Create(long id, string message, Channel channel, DateTime notifyAt, long userId)
         {
             return new Reminder(
