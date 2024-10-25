@@ -17,6 +17,14 @@
             RegisteredAt = registeredAt;
         }
 
+        private User() : base(default)
+        {
+            Firstname = string.Empty;
+            Lastname = string.Empty;
+            Email = string.Empty;
+            Mobile = string.Empty;
+        }
+
         public static User Create(long id, string firstname, string lastname, string email, string mobile)
         {
             return new User(
