@@ -2,18 +2,16 @@
 
 namespace Domain.Aggregates
 {
-    public class Reminder
+    public class Reminder : Entity<long>
     {
-        public long Id { get; }
         public string Message { get; private set; }
         public Channel Channel { get; private set; }
         public DateTime CreatedAt { get; }
         public DateTime NotifyAt { get; private set; }
         public long UserId { get; }
 
-        public Reminder(long id, string message, Channel channel, DateTime createdAt, DateTime notifyAt, long userId)
+        public Reminder(long id, string message, Channel channel, DateTime createdAt, DateTime notifyAt, long userId) : base(id)
         {
-            Id = id;
             Message = message;
             Channel = channel;
             CreatedAt = createdAt;

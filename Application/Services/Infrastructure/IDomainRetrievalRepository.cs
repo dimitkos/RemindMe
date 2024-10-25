@@ -1,4 +1,6 @@
-﻿namespace Application.Services.Infrastructure
+﻿using Domain;
+
+namespace Application.Services.Infrastructure
 {
     public interface IDomainRetrievalRepository<TKey, TOut>
         where TOut : class

@@ -29,16 +29,7 @@ namespace Infrastructure.Persistence.Queries.Users
                     lastname: user.Lastname,
                     email: user.Email,
                     mobile: user.Mobile,
-                    registeredAt: user.RegisteredAt,
-                    reminders: user.Reminders
-                    .Select(r => new Reminder(
-                        id: r.Id,
-                        message: r.Message,
-                        channel: r.Channel,
-                        createdAt: r.CreatedAt,
-                        notifyAt: r.NotifyAt
-                        ))
-                    .ToList()))
+                    registeredAt: user.RegisteredAt))
                .ToArray();
         }
     }

@@ -18,8 +18,9 @@ namespace Infrastructure.Persistence.Configuration
             builder.Property(x => x.Mobile).HasMaxLength(20).IsRequired();
 
             builder
-                .HasMany(user => user.Reminders)
+                .HasMany<Reminder>()
                 .WithOne()
+                .IsRequired()
                 .HasForeignKey(reminder => reminder.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }

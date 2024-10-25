@@ -1,26 +1,20 @@
-﻿using Shared;
-
-namespace Domain.Aggregates
+﻿namespace Domain.Aggregates
 {
-    public class User
+    public class User : Entity<long>
     {
-        public long Id { get; }
         public string Firstname { get; }
         public string Lastname { get; }
         public string Email { get; private set; }
         public string Mobile { get; private set; }
         public DateTime RegisteredAt { get; }
-        public List<Reminder> Reminders { get; }
 
-        public User(long id, string firstname, string lastname, string email, string mobile, DateTime registeredAt, List<Reminder> reminders)
+        public User(long id, string firstname, string lastname, string email, string mobile, DateTime registeredAt) : base(id)
         {
-            Id = id;
             Firstname = firstname;
             Lastname = lastname;
             Email = email;
             Mobile = mobile;
             RegisteredAt = registeredAt;
-            Reminders = reminders;
         }
 
         public static User Create(long id, string firstname, string lastname, string email, string mobile)
@@ -31,8 +25,7 @@ namespace Domain.Aggregates
                 lastname: lastname,
                 email: email,
                 mobile: mobile,
-                registeredAt: DateTime.UtcNow,
-                reminders: new List<Reminder>());
+                registeredAt: DateTime.UtcNow);
         }
 
         public User UpdateEmail(string email)

@@ -36,9 +36,8 @@
         public string Email { get; }
         public string Mobile { get; }
         public DateTime RegisteredAt { get; }
-        public List<Reminder> Reminders { get; }
 
-        public User(long id, string firstname, string lastname, string email, string mobile, DateTime registeredAt, List<Reminder> reminders)
+        public User(long id, string firstname, string lastname, string email, string mobile, DateTime registeredAt)
         {
             Id = id;
             Firstname = firstname;
@@ -46,7 +45,6 @@
             Email = email;
             Mobile = mobile;
             RegisteredAt = registeredAt;
-            Reminders = reminders;
         }
     }
 }
