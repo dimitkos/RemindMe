@@ -7,7 +7,7 @@ namespace Application.NotificationHandlers
     {
         public Task Handle(UserAdded notification, CancellationToken cancellationToken)
         {
-            //todo
+            //todo2
             throw new NotImplementedException();
         }
     }
