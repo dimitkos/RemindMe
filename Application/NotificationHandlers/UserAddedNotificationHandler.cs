@@ -7,6 +7,7 @@ namespace Application.NotificationHandlers
     {
         public Task Handle(UserAdded notification, CancellationToken cancellationToken)
         {
+            //implement later to send email
             throw new NotImplementedException();
         }
     }
