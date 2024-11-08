@@ -1,4 +1,5 @@
 using Application;
+using Application.Configurations;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using HealthChecks.UI.Client;
@@ -9,6 +10,8 @@ using Infrastructure.Persistence.Configuration;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Net;
+using System.Net.Mail;
 
 namespace RemindMe
 {
@@ -40,12 +43,31 @@ namespace RemindMe
             builder.Services
                 .AddHealthChecksUI(opt =>
                 {
-                    opt.SetEvaluationTimeInSeconds(10);   
-                    opt.MaximumHistoryEntriesPerEndpoint(60);    
-                    opt.SetApiMaxActiveRequests(1);   
-                    opt.AddHealthCheckEndpoint("RemindMe", "/api/health");  
+                    opt.SetEvaluationTimeInSeconds(10);
+                    opt.MaximumHistoryEntriesPerEndpoint(60);
+                    opt.SetApiMaxActiveRequests(1);
+                    opt.AddHealthCheckEndpoint("RemindMe", "/api/health");
                 })
                 .AddInMemoryStorage();
+
+
+            builder.Services.AddOptions<SmtpSettings>().Bind(builder.Configuration.GetSection(nameof(SmtpSettings))).ValidateDataAnnotations().ValidateOnStart();
+
+            var smtpSettings = builder.Configuration.GetSection(nameof(SmtpSettings)).Get<SmtpSettings>() ?? throw new ArgumentException("Could not retrieve SmtpSettings");
+
+            var smtp = new SmtpClient()
+            {
+                UseDefaultCredentials = smtpSettings.UseDefaultCredentials,
+                Credentials = new NetworkCredential(smtpSettings.Username, smtpSettings.Password),
+                EnableSsl = smtpSettings.EnableSsl,
+                Port = smtpSettings.Port,
+                Host = smtpSettings.Host,
+                Timeout = smtpSettings.Timeout
+            };
+
+            builder.Services
+                .AddFluentEmail(smtpSettings.Username)
+                .AddSmtpSender(smtp);
 
             var app = builder.Build();
 
